@@ -40,11 +40,18 @@
     const delete_item = (id) => {
         console.log("DELETE", id);
         todos = todos.filter(t => t.id != id);
+
+        localStorage.removeItem('todo${id}');
     }
 
     onMount(async () => {
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
+            const keyn = +key.substring(4);
+
+            if (keyn >= last_id) {
+                last_id = keyn;
+            }
             const todo = JSON.parse(localStorage.getItem(key));
             if (todo != null)
                 todos.push(todo);
